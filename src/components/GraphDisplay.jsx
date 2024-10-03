@@ -4,19 +4,19 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import '../App.css';
 import FunctionInput from './FunctionInput';
 import { createLine } from './lineFactory';
-import { convertMathExpression } from './Coorinates';
-import { evaluateExpression } from './FormPoints';
+import { useFunctionContext } from './contexts/FunctionalContext.jsx';
 
 const GraphDisplay = () => {
+  const { coordinateList } = useFunctionContext();
+
   const canvasRef = useRef(null);
   const [is2D, setIs2D] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
   const sceneRef = useRef(null);
-  const cameraRef = useRef(null);  // Store camera reference to update it later
-  const rendererRef = useRef(null); // Store renderer reference
-  const lineObjects = useRef([]);   // Holds the line objects in the scene
+  const cameraRef = useRef(null);
+  const rendererRef = useRef(null);
+  const lineObjects = useRef([]);
 
-  // Initialize scene, camera, renderer once
   useEffect(() => {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
@@ -39,12 +39,10 @@ const GraphDisplay = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     rendererRef.current = renderer;
 
-    // Set default camera and scene settings
     camera.position.set(10, 10, 10);
     camera.lookAt(0, 0, 0);
-    scene.background = new THREE.Color(0xffffff); // Light mode by default
+    scene.background = new THREE.Color(0xffffff);
 
-    // Axes setup (remains static, so this won't be re-created)
     const redMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
     const greenMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
     const blueMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
@@ -88,20 +86,19 @@ const GraphDisplay = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Update camera position when is2D changes
   useEffect(() => {
     const camera = cameraRef.current;
     if (camera) {
       if (is2D) {
-        camera.position.set(0, 0, 10); // 2D view
+        camera.position.set(0, 0, 10);
       } else {
-        camera.position.set(10, 10, 10); // 3D view
+        camera.position.set(10, 10, 10);
       }
-      camera.lookAt(0, 0, 0); // Reset look at position
+      camera.lookAt(0, 0, 0);
     }
   }, [is2D]);
 
-  // Update background color when isDarkMode changes
+
   useEffect(() => {
     const scene = sceneRef.current;
     if (scene) {
@@ -109,13 +106,18 @@ const GraphDisplay = () => {
     }
   }, [isDarkMode]);
 
-  const plotEquation = (equation) => {
-    const expression = convertMathExpression(equation);
-    const coordinates = evaluateExpression(expression, 0, 100);  // Generate coordinates for plotting
-    const newLine = createLine(coordinates, 0xff0000);
-    sceneRef.current.add(newLine);
-    lineObjects.current = [newLine]; // Store the newly plotted line
-  };
+  useEffect(() => {
+    const scene = sceneRef.current;
+
+    lineObjects.current.forEach(line => scene.remove(line));
+    lineObjects.current = [];
+
+    coordinateList.forEach((coordinates) => {
+      const newLine = createLine(coordinates, 0xff0000);
+      scene.add(newLine);
+      lineObjects.current.push(newLine);
+    });
+  }, [coordinateList]);
 
   const toggle2D = () => setIs2D((prev) => !prev);
 
@@ -125,7 +127,7 @@ const GraphDisplay = () => {
     <div className="app">
       <canvas ref={canvasRef} className="three-canvas"></canvas>
       <div className="overlay bottom-left">
-        <FunctionInput onSubmit={plotEquation} />
+        <FunctionInput />
       </div>
       <div className="overlay bottom-right">
         <button onClick={toggle2D}>{is2D ? 'Switch to 3D' : 'Switch to 2D'}</button>

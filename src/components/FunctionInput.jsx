@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import MathConverter from './MathConverter';
+import {useFunctionContext} from './contexts/FunctionalContext.jsx';
+import { convertMathExpression } from './Coorinates';
+import { evaluateExpression } from './FormPoints';
 
-const FunctionInput = ({onSubmit}) => {
+
+const FunctionInput = () => {
+
+  const { functionList, setFunctionsList, coordinateList, setCoordinateList } = useFunctionContext();
+
+    const addFunction = () => {
+        setFunctionsList([...functionList, `Function ${functionList.length + 1}`]);
+    };
+
+    const addCoordinate = (equation) => {
+      const expression = convertMathExpression(equation);
+      const newCoordinates = evaluateExpression(expression, 0, 100,0.01);
+      setCoordinateList([...coordinateList, newCoordinates]);
+    };
+
   const [mathFunction, setMathFunction] = useState('');
-  const [functionsList, setFunctionsList] = useState([]);
   const [isLarge, setIsLarge] = useState(false);
 
   const toggleSize = () => {
@@ -29,12 +45,10 @@ const FunctionInput = ({onSubmit}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (mathFunction.trim() !== '') {
-      setFunctionsList([...functionsList, mathFunction]); // Append new function to the list
-      setMathFunction(''); // Clear input after submission
-      if(mathFunction){
-        onSubmit(mathFunction);
-      }
-      console.log(functionsList);
+      addCoordinate(mathFunction);
+      addFunction(mathFunction);
+      setMathFunction('');
+      console.log(functionList);
     }
   };
 
@@ -79,7 +93,7 @@ const FunctionInput = ({onSubmit}) => {
         <button style={{ marginTop: '5px',marginRight:'5px' }}>Data from web</button>
       </form>
       <div className="function-list" style={{ marginTop: '20px' }}>
-        {functionsList.map((func, index) => (
+        {functionList.map((func, index) => (
           <div key={index} style={{ marginTop: '5px' }}>
             <MathConverter equation={func} />
           </div>

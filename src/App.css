@@ -73,7 +73,7 @@ html, body, #root {
   min-height: 10%;
   max-width: 1000px;
   padding: 10px; /* Add some padding for aesthetics */
-  border-radius: 0px;
+  border-radius: 8px;
   bottom: 10px;
   left: 10px;
   /* display: flex; */
