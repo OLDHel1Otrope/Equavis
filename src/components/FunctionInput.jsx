@@ -68,7 +68,7 @@ const FunctionInput = ({onSubmit}) => {
           type="text"
           value={mathFunction}
           onChange={handleInputChange}
-          placeholder="Enter a mathematical function (e.g. x^2 + 2x + 1)"
+          placeholder="Enter a mathematical function (e.g. y=x*x+2*x+1)"
           style={{ width: '100%', padding: '10px', fontSize: '1rem', boxSizing: 'border-box' }}
         />
         
