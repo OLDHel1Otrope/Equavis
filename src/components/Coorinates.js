@@ -1,7 +1,3 @@
-// function replaceCharacterWithNumber(str, char, num) {
-//     const regex = new RegExp(char, 'g');
-//     return str.replace(regex, num);
-//   }
 
   export const convertMathExpression=(expression) => {
     expression = expression.replace(/(\d+)\^(\d+)/g, (match, base, exponent) => {

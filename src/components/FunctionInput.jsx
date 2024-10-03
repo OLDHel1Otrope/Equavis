@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MathConverter from './MathConverter';
 
-const FunctionInput = () => {
+const FunctionInput = ({onSubmit}) => {
   const [mathFunction, setMathFunction] = useState('');
   const [functionsList, setFunctionsList] = useState([]);
   const [isLarge, setIsLarge] = useState(false);
@@ -31,6 +31,9 @@ const FunctionInput = () => {
     if (mathFunction.trim() !== '') {
       setFunctionsList([...functionsList, mathFunction]); // Append new function to the list
       setMathFunction(''); // Clear input after submission
+      if(mathFunction){
+        onSubmit(mathFunction);
+      }
       console.log(functionsList);
     }
   };
