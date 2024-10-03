@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'; // Import useDispatch hook
+import { login } from '../store/authSlice'; // Import the login action
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -7,12 +9,19 @@ const Login = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initialize useDispatch
 
   const handleLogin = (event) => {
     event.preventDefault();
 
+    // Simulate login check
     if (email === 'test@example.com' && password === 'password123') {
-      navigate('/workspace'); 
+      // Dispatch the login action with user data
+      const userData = { name: 'John Doe', email };
+      dispatch(login(userData)); 
+      
+      // Navigate to the workspace
+      navigate('/workspace');
     } else {
       setError('Invalid email or password');
     }

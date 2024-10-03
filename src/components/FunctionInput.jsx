@@ -9,8 +9,8 @@ const FunctionInput = () => {
 
   const { functionList, setFunctionsList, coordinateList, setCoordinateList } = useFunctionContext();
 
-    const addFunction = () => {
-        setFunctionsList([...functionList, `Function ${functionList.length + 1}`]);
+    const addFunction = (equation) => {
+        setFunctionsList([...functionList,equation]);
     };
 
     const addCoordinate = (equation) => {
