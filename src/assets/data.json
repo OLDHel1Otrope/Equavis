@@ -1,0 +1,74 @@
+[
+    {
+        "name": "Sales_Q1_Report",
+        "description": "Quarter 1 sales data analysis showing revenue trends by region. and some random text to check whether"
+    },
+    {
+        "name": "Customer_Satisfaction_Survey",
+        "description": "Data from the latest customer satisfaction survey, segmented by product line."
+    },
+    {
+        "name": "Product_Returns_Analysis",
+        "description": "Analysis of product returns across regions to identify potential quality issues."
+    },
+    {
+        "name": "Employee_Performance_Overview",
+        "description": "Annual performance data for employees, including key metrics for growth and productivity."
+    },
+    {
+        "name": "Financial_Projections_2024",
+        "description": "Projected financial outcomes for the upcoming year based on current growth trends."
+    },
+    {
+        "name": "Market_Share_By_Region",
+        "description": "Detailed view of market share percentages in different geographic locations."
+    },
+    {
+        "name": "Website_Traffic_Analysis",
+        "description": "Insights into website traffic patterns and user demographics over the last quarter."
+    },
+    {
+        "name": "Inventory_Levels_Monitoring",
+        "description": "Real-time inventory levels by warehouse location to optimize supply chain efficiency."
+    },
+    {
+        "name": "Monthly_Expenses_Breakdown",
+        "description": "Monthly breakdown of expenses, categorized by department and cost center."
+    },
+    {
+        "name": "Customer_Lifetime_Value",
+        "description": "Analysis of customer lifetime value across various segments to inform marketing strategies."
+    },
+    {
+        "name": "Sales_Report_Q1_2024.csv",
+        "description": "This CSV file contains the sales data for the first quarter of 2024, detailing revenue by region and product line."
+    },
+    {
+        "name": "Customer_Satisfaction_Survey_2024.pdf",
+        "description": "A PDF report summarizing customer satisfaction survey results, highlighting areas for improvement and overall satisfaction ratings."
+    },
+    {
+        "name": "Inventory_Analysis_March_2024.xlsx",
+        "description": "An Excel spreadsheet providing insights into inventory levels, turnover rates, and stock discrepancies for March 2024."
+    },
+    {
+        "name": "Marketing_Campaign_Effectiveness_Report.docx",
+        "description": "A Word document analyzing the effectiveness of the latest marketing campaign, including metrics on reach, engagement, and conversion rates."
+    },
+    {
+        "name": "Quarterly_Financial_Overview_Q2_2024.pptx",
+        "description": "A PowerPoint presentation summarizing the financial performance for the second quarter of 2024, including profit and loss statements."
+    },
+    {
+        "name": "Employee_Performance_Evaluation_2024.csv",
+        "description": "This CSV file contains performance evaluation scores for all employees, along with comments from their managers."
+    },
+    {
+        "name": "Market_Research_2024.pdf",
+        "description": "A comprehensive PDF report on market research conducted in 2024, covering trends, demographics, and competitive analysis."
+    },
+    {
+        "name": "Website_Traffic_Analysis_2024.xlsx",
+        "description": "An Excel file detailing website traffic metrics for 2024, including visitor counts, bounce rates, and traffic sources."
+    }
+]

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import MathConverter from './MathConverter';
 import {useFunctionContext} from './contexts/FunctionalContext.jsx';
 import { convertMathExpression } from './Coorinates';
 import { evaluateExpression } from './FormPoints';
+import CsvInput from './CsvInput.jsx';
 
 
 const FunctionInput = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
   const { functionList, setFunctionsList, coordinateList, setCoordinateList } = useFunctionContext();
+  const fileInputRef = useRef(null);
 
     const addFunction = (equation) => {
         setFunctionsList([...functionList,equation]);
@@ -15,8 +18,27 @@ const FunctionInput = () => {
 
     const addCoordinate = (equation) => {
       const expression = convertMathExpression(equation);
-      const newCoordinates = evaluateExpression(expression, 0, 100,0.01);
+      console.log(expression)
+      const newCoordinates = evaluateExpression(expression, -100, 100,0.1);
       setCoordinateList([...coordinateList, newCoordinates]);
+    };
+
+    const handleCSVUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const csvData = reader.result;
+          const rows = csvData.split('\n').map((row) => row.split(','));
+    
+          // Filter out any empty rows and add each as a new list to the state
+          const nonEmptyRows = rows.filter(row => row.length > 1);
+    
+          // Update state by adding new rows to the existing state
+          setCoordinateList((coordinateList) => [...coordinateList, ...nonEmptyRows]);
+        };
+        reader.readAsText(file);
+      }
     };
 
   const [mathFunction, setMathFunction] = useState('');
@@ -30,17 +52,7 @@ const FunctionInput = () => {
     setMathFunction(event.target.value);
   };
 
-  const handleCSVUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const csvData = reader.result;
-        // Parse the CSV data here and update state
-      };
-      reader.readAsText(file);
-    }
-  };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,6 +68,11 @@ const FunctionInput = () => {
     event.preventDefault();
     setFunctionsList([]);
   }
+
+  const toggleDiv = () => {
+    setIsVisible(!isVisible);
+  };
+
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
@@ -89,7 +106,14 @@ const FunctionInput = () => {
         <button type="submit" style={{ marginTop: '5px',marginRight:'5px' }}>Add</button>
         <button onClick={clearAllFunctions} style={{ marginTop: '5px',marginRight:'5px' }}>Clear All</button>
         <button onClick={toggleSize} style={{ marginTop: '5px',marginRight:'5px' }}>Toggle Size</button>
-        <button style={{ marginTop: '5px',marginRight:'5px' }}>Upload csv</button>
+        <button style={{ marginTop: '5px',marginRight:'5px' }} onClick={toggleDiv}>Upload csv</button>
+        {isVisible && (
+        // <div className="centered-div">
+        //   This is a centered div.
+        // </div>
+        <CsvInput></CsvInput>
+      )}
+        
         <button style={{ marginTop: '5px',marginRight:'5px' }}>Data from web</button>
       </form>
       <div className="function-list" style={{ marginTop: '20px' }}>

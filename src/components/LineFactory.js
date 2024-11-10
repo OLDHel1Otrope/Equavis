@@ -2,7 +2,7 @@ import * as THREE from 'three';
 export const createLine = (coordinates, color) => {
   const points = coordinates.map(coord => new THREE.Vector3(coord.x / 10, coord.y / 10, coord.z));
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const material = new THREE.LineBasicMaterial({ color });
+  const material = new THREE.LineBasicMaterial({ color: color, linewidth: 5, linecap: 'round'});
   const line = new THREE.Line(geometry, material);
   return line;
 };
